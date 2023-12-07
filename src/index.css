@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+
+  html,
+  body {
+    @apply custom-scrollbar
+  }
+
+  ch {
+    @apply custom-height
+  }
+
+
+}
+
+@layer utilities {
+
+  .custom-height {
+    height: -webkit-calc(100vh - 68px);
+
+
+  }
+  .bgpc {
+     background: url("../../public/assets/wall-2.jpg") no-repeat fixed center ;
+     background-size :cover;
+     
+  }
+
+  .custom-height-2 {
+    height: -webkit-calc(100vh - (68px + 50px + 32px));
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    border-radius: 0;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 50px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+  }
+
+}
