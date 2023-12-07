@@ -11,11 +11,12 @@ export default function Logout() {
   const navigate = useNavigate();
 
   const cancelButtonRef = useRef(null);
-  const {logoutUser} = useAuth()
+  const {logoutUser, userSession} = useAuth()
+  console.log(userSession);
 
   const out = () => {
      setLoading(true)
-     logoutUser()
+     logoutUser(userSession?.$id)
      toast.success('Logout Successfully', {theme : "colored"})
   }
 

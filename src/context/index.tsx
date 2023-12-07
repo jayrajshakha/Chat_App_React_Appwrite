@@ -1,38 +1,47 @@
 import { createContext, useState, useEffect } from "react";
 import { account } from "../config/AppConfig";
-import {useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { ID } from "appwrite";
 import { Models } from "appwrite";
 import { toast } from "react-toastify";
 
-
 type valuesType = {
   user: Models.User<Models.Preferences> | undefined;
+  userSession: Models.Session | undefined;
   loginUser: (userInfo: { email: string; password: string }) => void;
   registerUser: (userInfo: {
     email: string;
     password: string;
     name: string;
   }) => void;
-  logoutUser: () => void;
-  loading : boolean
+  logoutUser: (id: string) => void;
+  loading: boolean;
 };
 
 const inisialState: valuesType = {
   user: undefined,
+  userSession: undefined,
   loginUser: () => {},
   registerUser: () => {},
   logoutUser: () => {},
-  loading : true || false
+  loading: true || false,
 };
 
 const AuthContext = createContext<valuesType>(inisialState);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const navigate = useNavigate()
-  const localStorageState = JSON.parse(localStorage.getItem('Login'))
+  const navigate = useNavigate();
+  const localStorageState = JSON.parse(localStorage.getItem("Login") || "{}");
+  const localStorageSession = JSON.parse(
+    localStorage.getItem("Session") || "{}"
+  );
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<Models.User<Models.Preferences | object>>(localStorageState ? localStorageState : {});
+  const [user, setUser] = useState<Models.User<Models.Preferences | object>>(
+    localStorageState ? localStorageState : {}
+  );
+  const [userSession, setUserSession] = useState<Models.Session>(
+    localStorageSession ? localStorageSession : {}
+  );
 
   useEffect(() => {
     //setLoading(false)
@@ -42,25 +51,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const loginUser = async (userInfo: { email: string; password: string }) => {
     setLoading(true);
 
-
     try {
-       await account.createEmailSession(userInfo.email, userInfo.password);
-       const accountDetails = await account.get() as Models.User<Models.Preferences>;
-       localStorage.setItem('Login', JSON.stringify(accountDetails))
-       const localStorageData = JSON.parse(localStorage.getItem('Login'))
+      const a = await account.createEmailSession(
+        userInfo.email,
+        userInfo.password
+      );
+      localStorage.setItem("Session", JSON.stringify(a));
+      const localStorageSessionData = JSON.parse(
+        localStorage.getItem("Session") || "{}"
+      );
+      setUserSession(localStorageSessionData);
+      const accountDetails =
+        (await account.get()) as Models.User<Models.Preferences>;
+      localStorage.setItem("Login", JSON.stringify(accountDetails));
+      const localStorageData = JSON.parse(
+        localStorage.getItem("Login") || "{}"
+      );
       setUser(localStorageData);
-      toast.success('You are Login Successfully', {theme : "colored"})
-      navigate('/')
+      toast.success("You are Login Successfully", { theme: "colored" });
+      navigate("/");
     } catch (error) {
-        console.log(error);
-    setLoading(false);
-  }
-}
+      toast.error(`${error}`, { theme: "colored" });
+      setLoading(false);
+    }
+  };
 
-  const logoutUser = async () => {
-    await account.deleteSession("current");
-     localStorage.removeItem('Login')
-    setUser(undefined);
+  const logoutUser = async (id: string) => {
+    await account.deleteSession(id);
+    localStorage.removeItem("Login");
+    setUser(Object);
   };
 
   const registerUser = async (userInfo: {
@@ -77,17 +96,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         userInfo.password,
         userInfo.name
       );
-      await account.createEmailSession(userInfo.email, userInfo.password);
+      const a = await account.createEmailSession(
+        userInfo.email,
+        userInfo.password
+      );
+      setUserSession(a);
       const accountDetails =
         (await account.get()) as Models.User<Models.Preferences>;
-        localStorage.setItem('Login', JSON.stringify(accountDetails))
-        const localStorageData = JSON.parse(localStorage.getItem('Login'))
-       setUser(localStorageData);
+      localStorage.setItem("Login", JSON.stringify(accountDetails));
+      const localStorageData = JSON.parse(
+        localStorage.getItem("Login") || "{}"
+      );
+      setUser(localStorageData);
       setUser(accountDetails);
-      toast.success('You are SignUp Successfully', {theme : "colored"});
+      toast.success("You are SignUp Successfully", { theme: "colored" });
       navigate("/");
     } catch (error) {
-      toast.error( `${error}` , {theme : "colored"})
+      toast.error(`${error}`, { theme: "colored" });
     }
 
     setLoading(false);
@@ -106,17 +131,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const contextData: valuesType = {
     user,
+    userSession,
     loading,
     loginUser,
     logoutUser,
     registerUser,
   };
 
-
   return (
-    <AuthContext.Provider value={contextData}>
-      { children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );
 };
 

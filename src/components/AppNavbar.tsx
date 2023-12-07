@@ -13,7 +13,7 @@ function classNames(...classes: unknown[]) {
   return classes.filter(Boolean).join(" ");
 }
 export default function AppNavbar() {
-  const { user , loading} = useAuth();
+  const { user } = useAuth();
 
   const community = communitiesStore(
     (state) => state.communities

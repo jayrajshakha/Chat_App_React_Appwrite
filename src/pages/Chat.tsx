@@ -68,7 +68,7 @@ const Chat = () => {
     }
     isFetch.current = true;
     setLoading(false);
-  }, []);
+  },[]);
 
   const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

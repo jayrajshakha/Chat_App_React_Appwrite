@@ -16,7 +16,7 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  const changHandler = (e) => {
+  const changHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
      setAuth({...auth, [e.target.name] : e.target.value})
   }
 
@@ -42,7 +42,7 @@ const Login = () => {
         <form onSubmit={submitHandler} action="">
           <div className="m-5">
             <Input
-              onChange={(e)=> changHandler(e)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>)=> changHandler(e)}
               label={"Email"}
               type="Email"
               name = 'email'
@@ -51,7 +51,7 @@ const Login = () => {
           <div className="m-5">
             <Input
               // onChange={(e) => setAuth({ ...auth, password: e.target.value })}
-              onChange={(e)=> changHandler(e)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>)=> changHandler(e)}
               label={"Password"}
               type="Password"
               name = 'password'
