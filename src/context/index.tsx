@@ -126,7 +126,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         (await account.get()) as Models.User<Models.Preferences>;
       setUser(accountDetails);
     } catch (error) {
-      console.log(error);
+      toast.error(`${error}`, { theme: "colored" });
     }
     setLoading(false);
   };

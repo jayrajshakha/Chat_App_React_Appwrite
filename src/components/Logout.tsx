@@ -11,17 +11,14 @@ export default function Logout() {
   const navigate = useNavigate();
 
   const cancelButtonRef = useRef(null);
-  const {logoutUser, userSession} = useAuth()
-  console.log(userSession);
+  const { logoutUser, userSession } = useAuth();
 
   const out = () => {
-     setLoading(true)
-     logoutUser(userSession?.$id)
-     navigate('/login')
-     toast.success('Logout Successfully', {theme : "colored"})
-  }
-
-
+    setLoading(true);
+    logoutUser(userSession ? userSession?.$id : "");
+    navigate("/login");
+    toast.success("Logout Successfully", { theme: "colored" });
+  };
 
   return (
     <div onClick={() => navigate("/")}>
