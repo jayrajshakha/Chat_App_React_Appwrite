@@ -1,20 +1,19 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./auth/Login";
+import Register from "./auth/Register";
 import PrivateRoutes from "./routes/PrivateRoutes";
-import AppNavbar from "./components/AppNavbar";
-import CommunityList from "./components/CommunitiList";
-import Logout from "./components/Logout";
+import {
+  AppNavbar,
+  CommunityList,
+  Logout,
+  ErrorPage,
+} from "./components/Index";
 import Chat from "./pages/Chat";
-import ErrorPage from "./pages/Error";
-
 
 const App = () => {
-
-
   return (
-    <div className="custom-scrollbar bg-black w-screen h-screen">
+    <div className="custom-scrollbar  bgpc w-screen h-screen">
       <BrowserRouter>
         <AuthProvider>
           <Routes>
@@ -27,14 +26,12 @@ const App = () => {
               <Route
                 path="/"
                 element={
-                  
-                    <>
-                      <AppNavbar />
-                      <div className="flex bgpc custom-height justify-center items-center flex-col">
-                        <CommunityList />
-                      </div>
-                    </>
-                  
+                  <>
+                    <AppNavbar />
+                    <div className="flex custom-height justify-center items-center sm:items-end sm:pr-36 flex-col">
+                      <CommunityList />
+                    </div>
+                  </>
                 }
               />
             </Route>

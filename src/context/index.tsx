@@ -78,7 +78,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logoutUser = async (id: string) => {
     await account.deleteSession(id);
+    localStorage.removeItem("Session");
     localStorage.removeItem("Login");
+
     setUser(Object);
   };
 

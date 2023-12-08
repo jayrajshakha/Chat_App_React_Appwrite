@@ -1,5 +1,5 @@
 
-export const SearchIcon = ({
+const SearchIcon = ({
     strokeWidth = 1.5,
     width = 18,
     height = 18,
@@ -32,3 +32,4 @@ export const SearchIcon = ({
     </svg>
   );
   
+  export default SearchIcon;

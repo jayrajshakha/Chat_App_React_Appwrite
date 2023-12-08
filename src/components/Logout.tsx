@@ -17,6 +17,7 @@ export default function Logout() {
   const out = () => {
      setLoading(true)
      logoutUser(userSession?.$id)
+     navigate('/login')
      toast.success('Logout Successfully', {theme : "colored"})
   }
 

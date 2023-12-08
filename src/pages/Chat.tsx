@@ -10,7 +10,7 @@ import {
 import { AppwriteException, ID, Models } from "appwrite";
 import { toast } from "react-toastify";
 import { messageStore } from "../data/Chat";
-import Loading from "../components/Loading";
+import { Loading } from "../components/Index";
 import { communitiesStore } from "../data/communitiesStore";
 import { useAuth } from "../hooks/useAuth";
 
@@ -24,7 +24,7 @@ const Chat = () => {
   const myRef = useRef() as MutableRefObject<HTMLDivElement>;
   const [submit, setSubmit] = useState(false);
 
-  const {user} = useAuth()
+  const { user } = useAuth();
 
   const messageData = messageStore();
   const communityData = communitiesStore();
@@ -68,7 +68,7 @@ const Chat = () => {
     }
     isFetch.current = true;
     setLoading(false);
-  },[]);
+  }, []);
 
   const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -116,11 +116,11 @@ const Chat = () => {
   return loading ? (
     <Loading />
   ) : (
-    <div className="bg-black  h-screen w-screen">
+    <div className="bg-black h-screen w-screen">
       <AppNavbar />
-      <div className= "flex flex-col w-screen custom-height gap-2 ">
-        <div className="flex justify-center items-center bg-[#2e0b5e]">
-          <h1 className="font-bold text-2xl text-gray-500">{heading}</h1>
+      <div className="flex flex-col w-screen custom-height gap-2 ">
+        <div className="flex justify-center items-center bg-blue-Toastify--animate ">
+          <p className="font-bold text-2xl fontss  text-gray-500">{heading}</p>
         </div>
         {/* this div for display message */}
         <div className="flex flex-col mx-2 sm:mx-10 overflow-scroll custom-scrollbar mb-5 custom-height-2 ">

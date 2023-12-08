@@ -2,7 +2,6 @@ import { Account, Client, Databases } from "appwrite";
 
 const projectId = import.meta.env.VITE_APP_PROJECT_ID;
 const endPoint = import.meta.env.VITE_APP_END_POINTS;
- 
 
 export const client = new Client();
 

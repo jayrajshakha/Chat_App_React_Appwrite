@@ -2,9 +2,8 @@ import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@nextui-org/react";
-import { SearchIcon } from "./SearchIcon";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import CreateCommunity from "./CreateCommunity";
+import { CreateCommunity, SearchIcon } from "./Index";
 import { Models } from "appwrite";
 import { communitiesStore } from "../data/communitiesStore";
 import { useAuth } from "../hooks/useAuth";
@@ -12,6 +11,7 @@ import { useAuth } from "../hooks/useAuth";
 function classNames(...classes: unknown[]) {
   return classes.filter(Boolean).join(" ");
 }
+
 export default function AppNavbar() {
   const { user } = useAuth();
 
@@ -43,7 +43,7 @@ export default function AppNavbar() {
   };
 
   return (
-    <Disclosure as="nav" className="z-[100] bg-gray-800 sticky top-0  ">
+    <Disclosure as="nav" className="z-[100] bg-transparent sticky top-0  ">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -65,15 +65,10 @@ export default function AppNavbar() {
                   onClick={navigate}
                   className="flex cursor-pointer flex-shrink-0 items-center"
                 >
-                  {/* <img
-                    className=" h-6 mx-2 w-auto"
-                    src= '../../public/assets/favicon.ico'
-                    alt="Your Company"
-                  /> */}
                   <p className="text-white font-bold text-lg">Snapgarm</p>
                 </div>
                 <div className="hidden sm:flex p-4 justify-center items-center ">
-                  <div className=" text-center mt-1 rounded p-2 bg-gray-700 hover:bg-blue-800 hover:text-white text-gray-400 text-sm font-normal">
+                  <div className=" text-center mt-1 rounded p-2  hover:border  hover:text-white text-white text-sm font-normal">
                     <CreateCommunity />
                   </div>
                 </div>
@@ -86,9 +81,9 @@ export default function AppNavbar() {
                     classNames={{
                       base: "max-w-full sm:max-w-[13rem] h-10 hover:bg-blue-800  ",
                       mainWrapper: "h-full hover:bg-blue-800 ",
-                      input: "text-small  ",
+                      input: "text-small placeholder:text-gray-400 ",
                       inputWrapper:
-                        "h-full font-normal hover:bg-blue-800  text-default-500 bg-default-400/20 dark:bg-default-500/20",
+                        "h-full font-normal hover:bg-blue-800  text-default-500 bg-transparent dark:bg-default-500/20",
                     }}
                     placeholder="Search communities"
                     size="sm"
@@ -113,8 +108,8 @@ export default function AppNavbar() {
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        className="h-8 w-8 hover:border border-black rounded-full"
+                        src="../../public/assets/profile.jpg"
                         alt=""
                       />
                     </Menu.Button>
@@ -158,7 +153,6 @@ export default function AppNavbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-            
                             to={"/logout"}
                             className={classNames(
                               active ? "bg-gray-100" : "",

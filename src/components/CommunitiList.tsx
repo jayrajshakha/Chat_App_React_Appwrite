@@ -6,8 +6,7 @@ import {
   databaseId,
 } from "../config/AppConfig";
 import { AppwriteException, Query } from "appwrite";
-import Loading from "./Loading";
-import CreateCommunity from "./CreateCommunity";
+import { CreateCommunity, Loading } from "./Index";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../hooks/useAuth";
@@ -16,7 +15,7 @@ const CommunityList = () => {
   const [loading, setLoading] = useState(false);
   const isFetch = useRef(false);
   const communityStoreData = communitiesStore();
-  const  {user} = useAuth()
+  const { user } = useAuth();
 
   const deleteFunction = (id: string) => {
     database
@@ -48,7 +47,7 @@ const CommunityList = () => {
     }
 
     isFetch.current = true;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -61,7 +60,7 @@ const CommunityList = () => {
             <h2 className="mb-3 ml-4 text-base font-bold text-white md:text-xl dark:text-white">
               Communities
             </h2>
-            <p className=" sm:hidden md:inline-block  p-2 text-sm font-normal text-gray-500 dark:text-gray-400">
+            <p className=" sm:hidden md:inline-block  p-2 text-sm font-normal text-gray-300 dark:text-gray-400">
               Connect with one of our available Community providers or create a
               new one.
             </p>
@@ -122,7 +121,7 @@ const CommunityList = () => {
             <div className="mt-4">
               <a
                 href="#"
-                className="inline-flex items-center text-xs font-normal text-gray-500 hover:underline dark:text-gray-400"
+                className="inline-flex items-center text-xs font-normal text-gray-300 hover:underline dark:text-gray-400"
               >
                 <svg
                   className="w-3 h-3 me-2"
