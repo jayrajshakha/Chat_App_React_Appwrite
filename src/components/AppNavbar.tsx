@@ -65,7 +65,7 @@ export default function AppNavbar() {
                   onClick={navigate}
                   className="flex cursor-pointer flex-shrink-0 items-center"
                 >
-                  <p className="text-white font-bold text-lg">Snapgarm</p>
+                  <p className="text-white font-bold text-lg font-cursive ">Snapgarm</p>
                 </div>
                 <div className="hidden sm:flex p-4 justify-center items-center ">
                   <div className=" text-center mt-1 rounded p-2  hover:border  hover:text-white text-white text-sm font-normal">
