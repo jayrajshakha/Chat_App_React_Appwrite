@@ -120,7 +120,9 @@ const Chat = () => {
       <AppNavbar />
       <div className="flex flex-col w-screen custom-height gap-2 ">
         <div className="flex justify-center items-center bg-blue-Toastify--animate ">
-          <p className="font-bold text-2xl fontss  text-gray-500">{heading}</p>
+          <p className="font-bold text-2xl fontss  text-gray-500">
+            {heading} <span className="text-xl"> {` key ~${params.id}`}</span>
+          </p>
         </div>
         {/* this div for display message */}
         <div className="flex flex-col mx-2 sm:mx-10 overflow-scroll custom-scrollbar mb-5 custom-height-2 ">

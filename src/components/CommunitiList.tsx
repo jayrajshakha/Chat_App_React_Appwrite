@@ -5,17 +5,18 @@ import {
   database,
   databaseId,
 } from "../config/AppConfig";
-import { AppwriteException, Query } from "appwrite";
+import { AppwriteException, Models } from "appwrite";
 import { CreateCommunity, Loading } from "./Index";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const CommunityList = () => {
   const [loading, setLoading] = useState(false);
   const isFetch = useRef(false);
   const communityStoreData = communitiesStore();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const deleteFunction = (id: string) => {
     database
@@ -33,15 +34,15 @@ const CommunityList = () => {
     setLoading(true);
     if (!isFetch.current) {
       database
-        .listDocuments(databaseId, communityCallectionId, [
-          Query.select(["$id", "Name", "user_id"]),
-        ])
+        .listDocuments(databaseId, communityCallectionId)
         .then((res) => {
           communityStoreData.AddCommunities(res.documents);
           setLoading(false);
         })
         .catch((err: AppwriteException) => {
           setLoading(false);
+          console.log(err);
+
           toast.error(err.message, { theme: "colored" });
         });
     }
@@ -49,6 +50,12 @@ const CommunityList = () => {
     isFetch.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const keysFun = (item: Models.Document) => {
+    item.status === "1" && item.user_id !== user?.$id
+      ? navigate("/access")
+      : navigate(`/chat/${item.$id}`);
+  };
 
   return (
     <>
@@ -85,11 +92,11 @@ const CommunityList = () => {
                       key={item.$id}
                       className="flex w-full items-center justify-between  h-[30px] p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-200 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
                     >
-                      <Link to={`/chat/${item.$id}`} className="w-full">
+                      <button className="w-full" onClick={() => keysFun(item)}>
                         <span className="flex-1 ms-3 whitespace-nowrap w-28">
                           {item.Name}
                         </span>
-                      </Link>
+                      </button>
                       <button
                         title="del"
                         disabled={item.user_id !== user?.$id}

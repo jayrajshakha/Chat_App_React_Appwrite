@@ -8,6 +8,7 @@ import {
   CommunityList,
   Logout,
   ErrorPage,
+  Access,
 } from "./components/Index";
 import Chat from "./pages/Chat";
 
@@ -23,6 +24,7 @@ const App = () => {
             <Route element={<PrivateRoutes />}>
               <Route path="logout" element={<Logout />} />
               <Route path="/chat/:id" element={<Chat />} />
+              <Route path="/access" element={<Access />} />
               <Route
                 path="/"
                 element={
